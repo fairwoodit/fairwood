@@ -1,0 +1,2 @@
+module Walkathon::PledgesHelper
+end
