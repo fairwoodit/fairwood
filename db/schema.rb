@@ -11,9 +11,30 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 0) do
+ActiveRecord::Schema.define(version: 20141002132124) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "students", force: true do |t|
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "grade"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "walkathon_pledges", force: true do |t|
+    t.string   "sponsor_name"
+    t.string   "sponsor_phone"
+    t.decimal  "pledge_per_lap", precision: 5, scale: 2
+    t.decimal  "maximum_pledge", precision: 7, scale: 2
+    t.decimal  "fixed_pledge",   precision: 7, scale: 2
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "student_id"
+  end
+
+  add_index "walkathon_pledges", ["student_id"], name: "index_walkathon_pledges_on_student_id", using: :btree
 
 end
