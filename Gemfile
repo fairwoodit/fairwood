@@ -40,6 +40,10 @@ gem 'unicorn'
 
 gem 'jquery-ui-rails'
 
+# Bootstrap
+gem 'bootstrap-sass'
+gem 'autoprefixer-rails'
+
 # For Heroku static asset handling
 group :development do
   gem 'rspec-rails'

@@ -1,41 +1,73 @@
 <%= form_for(@walkathon_pledge) do |f| %>
-  <% if @walkathon_pledge.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@walkathon_pledge.errors.count, "error") %> prohibited this walkathon_pledge from being saved:</h2>
+    <% if @walkathon_pledge.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@walkathon_pledge.errors.count, "error") %> prohibited this walkathon_pledge from being
+            saved:</h2>
 
-      <ul>
-      <% @walkathon_pledge.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+          <ul>
+            <% @walkathon_pledge.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
 
     <div class="field">
       <%= f.label :student_name %><br>
-      <input type="text" name="student_name">
+      <input type="text" name="student_name" id="student_name">
     </div>
-  <div class="field">
-    <%= f.label :sponsor_name %><br>
-    <%= f.text_field :sponsor_name %>
-  </div>
-  <div class="field">
-    <%= f.label :sponsor_phone %><br>
-    <%= f.text_field :sponsor_phone %>
-  </div>
-  <div class="field">
-    <%= f.label :pledge_per_lap %><br>
-    <%= f.text_field :pledge_per_lap %>
-  </div>
-  <div class="field">
-    <%= f.label :maximum_pledge %><br>
-    <%= f.text_field :maximum_pledge %>
-  </div>
-  <div class="field">
-    <%= f.label :fixed_pledge %><br>
-    <%= f.text_field :fixed_pledge %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+    <div class="field">
+      <%= f.label :sponsor_name %><br>
+      <%= f.text_field :sponsor_name %>
+    </div>
+    <div class="field">
+      <%= f.label :sponsor_phone %><br>
+      <%= f.text_field :sponsor_phone %>
+    </div>
+    <div class="field">
+      <%= f.label :pledge_per_lap %><br>
+      <%= f.text_field :pledge_per_lap %>
+    </div>
+    <div class="field">
+      <%= f.label :maximum_pledge %><br>
+      <%= f.text_field :maximum_pledge %>
+    </div>
+    <div class="field">
+      <%= f.label :fixed_pledge %><br>
+      <%= f.text_field :fixed_pledge %>
+    </div>
+    <div class="actions">
+      <%= f.submit %>
+    </div>
 <% end %>
+<script>
+    $(function() {
+        var students = [
+            "ActionScript",
+            "AppleScript",
+            "Asp",
+            "BASIC",
+            "C",
+            "C++",
+            "Clojure",
+            "COBOL",
+            "ColdFusion",
+            "Erlang",
+            "Fortran",
+            "Groovy",
+            "Haskell",
+            "Java",
+            "JavaScript",
+            "Lisp",
+            "Perl",
+            "PHP",
+            "Python",
+            "Ruby",
+            "Scala",
+            "Scheme"
+        ];
+        $("#student_name").autocomplete({
+            source: students
+        });
+    });
+</script>
