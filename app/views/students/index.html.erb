@@ -27,3 +27,10 @@
 <br>
 
 <%= link_to 'New Student', new_student_path %>
+
+<hr>
+
+<%= form_tag({action: :import}, multipart: true) do %>
+    Load students from a CSV File: <%= file_field_tag 'student_data' %>
+    <%= submit_tag("Upload") %>
+<% end %>

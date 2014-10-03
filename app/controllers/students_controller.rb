@@ -61,6 +61,27 @@ class StudentsController < ApplicationController
     end
   end
 
+  def import
+    # Parse the student data
+    student_data = params[:student_data] ? params[:student_data].read : ""
+
+    # TODO: Don't assume first row is a header row. Detect it and skip if it's there.
+    row_count = 0
+    student_data.split(/[\r\n]/).each do |row|
+      next if row.blank?
+      row_count += 1
+
+      # Skip the header row (e.g. first row) in the data
+      next if row_count == 1
+
+      parsed_row = row.split(/,/)
+      s = Student.new(last_name: parsed_row[1], first_name: parsed_row[2], grade: parsed_row[3])
+      s.save!
+    end
+
+    redirect_to students_url, notice: "#{row_count - 1} student records created."
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_student
