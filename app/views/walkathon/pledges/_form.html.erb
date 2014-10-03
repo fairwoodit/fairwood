@@ -43,32 +43,9 @@
 </div>
 <script>
     $(function () {
-        var students = [
-            "ActionScript",
-            "AppleScript",
-            "Asp",
-            "BASIC",
-            "C",
-            "C++",
-            "Clojure",
-            "COBOL",
-            "ColdFusion",
-            "Erlang",
-            "Fortran",
-            "Groovy",
-            "Haskell",
-            "Java",
-            "JavaScript",
-            "Lisp",
-            "Perl",
-            "PHP",
-            "Python",
-            "Ruby",
-            "Scala",
-            "Scheme"
-        ];
         $("#student_name").autocomplete({
-            source: students
+            source: "<%= student_search_path %>",
+            minLength: 2
         });
     });
 </script>

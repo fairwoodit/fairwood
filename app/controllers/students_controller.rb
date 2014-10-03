@@ -82,6 +82,14 @@ class StudentsController < ApplicationController
     redirect_to students_url, notice: "#{row_count - 1} student records created."
   end
 
+  def search
+    # Search for students based on full-names and last-names that start with the search term.
+
+    search_for = "#{params[:term]}%"
+    @matches = Student.where("full_name ilike ? or last_name ilike ?", search_for, search_for).limit(10).pluck(:full_name)
+    render json: @matches
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_student

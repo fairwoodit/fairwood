@@ -1,3 +1,7 @@
 // Place all the styles related to the Walkathon::Pledges controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.ui-autocomplete-loading {
+  background: white image-url("loading-small.gif") right center no-repeat;
+}
