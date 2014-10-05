@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  resources :parents
+
+  resources :families
+
+  resources :teachers
+
   namespace :walkathon do
     resources :pledges
   end

@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Teacher name:</strong>
+  <%= @teacher.full_name %>
+</p>
+
+<p>
+  <strong>Students:</strong><br>
+  <%= render partial: "shared/student", collection: @teacher.students %>
+</p>
+
+<%= link_to 'Edit', edit_teacher_path(@teacher) %> |
+<%= link_to 'Back', teachers_path %>

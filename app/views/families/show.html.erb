@@ -1,0 +1,12 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Parents:</strong><br>
+  <%= render partial: "parent", collection: @family.parents %>
+</p>
+<p>
+  <strong>Students:</strong><br>
+  <%= render partial: "shared/student", collection: @family.students %>
+</p>
+<%= link_to 'Edit', edit_family_path(@family) %> |
+<%= link_to 'Back', families_path %>
