@@ -15,5 +15,14 @@
   <%= @student.grade %>
 </p>
 
+<p>
+  <strong>Teacher:</strong>
+  <%= link_to @student.teacher.full_name, @student.teacher %>
+</p>
+
+<p>
+  <%= link_to "Family Details", @student.family %>
+</p>
+
 <%= link_to 'Edit', edit_student_path(@student) %> |
 <%= link_to 'Back', students_path %>
