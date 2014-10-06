@@ -13,27 +13,36 @@
   <% end %>
   <%= form_for(@walkathon_pledge) do |f| %>
       <div class="field">
-        <%= f.label :student_name %><br>
+        <%= f.label :student_name %>
         <input type="text" name="student_name" id="student_name">
       </div>
       <div class="field">
-        <%= f.label :sponsor_name %><br>
+        <%= f.label :sponsor_name %>
         <%= f.text_field :sponsor_name %>
       </div>
       <div class="field">
-        <%= f.label :sponsor_phone %><br>
-        <%= f.text_field :sponsor_phone %>
+        <%= f.label :sponsor_phone %> (in xxx-xxx-xxxx form)
+        <%= f.phone_field :sponsor_phone %>
       </div>
       <div class="field">
-        <%= f.label :pledge_per_lap %><br>
-        <%= f.text_field :pledge_per_lap %>
+        <%= f.label "Choose your pledge type" %>
+        <%= f.radio_button :pledge_type, "perLap" %> 
+        Per Lap
+         <%= f.radio_button :pledge_type, "fixed" %>
+        Fixed Amount
       </div>
-      <div class="field">
-        <%= f.label :maximum_pledge %><br>
-        <%= f.text_field :maximum_pledge %>
+      <div id="perLapContainer" style="margin-left: 20px">
+        <div class="field">
+          <%= f.label :pledge_per_lap %> $
+          <%= f.text_field :pledge_per_lap %>
+        </div>
+        <div class="field">
+          <%= f.label :maximum_pledge %> $
+          <%= f.text_field :maximum_pledge %>
+        </div>
       </div>
-      <div class="field">
-        <%= f.label :fixed_pledge %><br>
+      <div id="fixedPledgeContainer" class="field" style="margin-left: 20px">
+        <%= f.label :fixed_pledge %>
         <%= f.text_field :fixed_pledge %>
       </div>
       <div class="actions">
@@ -42,10 +51,37 @@
   <% end %>
 </div>
 <script>
+    function showHidePledgeGroups(r) {
+        if (r.val() == "fixed") {
+            $("#perLapContainer").hide();
+            $("#fixedPledgeContainer").show();
+        } else {
+            $("#perLapContainer").show();
+            $("#fixedPledgeContainer").hide();
+        }
+    }
     $(function () {
+        $("input:radio").change(function () {
+            // TODO: Figure out a way to consolidate this with the showHidePledgeGroups function.
+            if (this.value == "fixed") {
+                $("#perLapContainer").hide();
+                $("#fixedPledgeContainer").show();
+            } else {
+                $("#perLapContainer").show();
+                $("#fixedPledgeContainer").hide();
+            }
+        });
         $("#student_name").autocomplete({
             source: "<%= student_search_path %>",
             minLength: 2
         });
+        checkedRadio = $('input:radio:checked');
+        if (checkedRadio.val() == undefined) {
+            r = $('input:radio[value="perLap"]');
+            r.click();
+            showHidePledgeGroups(r);
+        } else {
+            showHidePledgeGroups(checkedRadio);
+        }
     });
 </script>
