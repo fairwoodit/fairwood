@@ -43,6 +43,7 @@ gem 'jquery-ui-rails'
 # Bootstrap
 gem 'bootstrap-sass'
 gem 'autoprefixer-rails'
+gem 'bootstrap_form'
 
 # For Heroku static asset handling
 group :development do
