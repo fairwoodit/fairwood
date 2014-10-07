@@ -3,6 +3,7 @@
       <%= f.text_field :student_name %>
       <%= f.text_field :sponsor_name %>
       <%= f.phone_field :sponsor_phone, help: "in xxx-xxx-xxxx form", control_col: "col-sm-4" %>
+      <%= f.email_field :sponsor_email %>
       <%= f.form_group :pledge_type, label: { text: "Choose your pledge type" }, control_col: "col-sm-6" do %>
           <%= f.radio_button :pledge_type, "perLap", label: "Per Lap", inline: true %> 
            <%= f.radio_button :pledge_type, "fixed", label: "Fixed Amount", inline: true %>

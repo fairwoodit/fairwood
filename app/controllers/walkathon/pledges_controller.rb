@@ -78,10 +78,10 @@ class Walkathon::PledgesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def fixed_params
-    params.require(:walkathon_pledge).permit(:student_name, :sponsor_name, :sponsor_phone, :pledge_type, :fixed_pledge)
+    params.require(:walkathon_pledge).permit(:student_name, :sponsor_name, :sponsor_phone, :sponsor_email, :pledge_type, :fixed_pledge)
   end
 
   def per_lap_params
-    params.require(:walkathon_pledge).permit(:student_name, :sponsor_name, :sponsor_phone, :pledge_type, :pledge_per_lap, :maximum_pledge)
+    params.require(:walkathon_pledge).permit(:student_name, :sponsor_name, :sponsor_phone, :sponsor_email, :pledge_type, :pledge_per_lap, :maximum_pledge)
   end
 end
