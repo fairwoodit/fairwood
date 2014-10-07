@@ -1,53 +1,20 @@
-<div style="width: 800px; background-color: antiquewhite">
-  <% if @walkathon_pledge.errors.any? %>
-      <div id="error_explanation">
-        <h2><%= pluralize(@walkathon_pledge.errors.count, "error") %> prohibited this walkathon_pledge from being
-          saved:</h2>
-
-        <ul>
-          <% @walkathon_pledge.errors.full_messages.each do |message| %>
-              <li><%= message %></li>
-          <% end %>
-        </ul>
+<div style="width: 600px; background-color: lightskyblue; margin-left: auto; margin-right: auto; padding: 10px; border-radius: 10px">
+  <%= bootstrap_form_for(@walkathon_pledge, layout: :horizontal, label_col: "col-sm-4", control_col: "col-sm-6") do |f| %>
+      <%= f.text_field :student_name %>
+      <%= f.text_field :sponsor_name %>
+      <%= f.phone_field :sponsor_phone, help: "in xxx-xxx-xxxx form", control_col: "col-sm-4" %>
+      <%= f.form_group :pledge_type, label: { text: "Choose your pledge type" }, control_col: "col-sm-6" do %>
+          <%= f.radio_button :pledge_type, "perLap", label: "Per Lap", inline: true %> 
+           <%= f.radio_button :pledge_type, "fixed", label: "Fixed Amount", inline: true %>
+      <% end %>
+      <div id="perLapContainer">
+          <%= f.text_field :pledge_per_lap, prepend: "$", control_col: "col-sm-3" %>
+          <%= f.text_field :maximum_pledge, prepend: "$", control_col: "col-sm-3" %>
       </div>
-  <% end %>
-  <%= form_for(@walkathon_pledge) do |f| %>
-      <div class="field">
-        <%= f.label :student_name %>
-        <input type="text" name="student_name" id="student_name">
+      <div id="fixedPledgeContainer">
+        <%= f.text_field :fixed_pledge, prepend: "$", control_col: "col-sm-3" %>
       </div>
-      <div class="field">
-        <%= f.label :sponsor_name %>
-        <%= f.text_field :sponsor_name %>
-      </div>
-      <div class="field">
-        <%= f.label :sponsor_phone %> (in xxx-xxx-xxxx form)
-        <%= f.phone_field :sponsor_phone %>
-      </div>
-      <div class="field">
-        <%= f.label "Choose your pledge type" %>
-        <%= f.radio_button :pledge_type, "perLap" %> 
-        Per Lap
-         <%= f.radio_button :pledge_type, "fixed" %>
-        Fixed Amount
-      </div>
-      <div id="perLapContainer" style="margin-left: 20px">
-        <div class="field">
-          <%= f.label :pledge_per_lap %> $
-          <%= f.text_field :pledge_per_lap %>
-        </div>
-        <div class="field">
-          <%= f.label :maximum_pledge %> $
-          <%= f.text_field :maximum_pledge %>
-        </div>
-      </div>
-      <div id="fixedPledgeContainer" class="field" style="margin-left: 20px">
-        <%= f.label :fixed_pledge %>
-        <%= f.text_field :fixed_pledge %>
-      </div>
-      <div class="actions">
-        <%= f.submit %>
-      </div>
+      <%= f.submit nil, {class: "btn-primary col-md-offset-5"}%>
   <% end %>
 </div>
 <script>
@@ -71,7 +38,7 @@
                 $("#fixedPledgeContainer").hide();
             }
         });
-        $("#student_name").autocomplete({
+        $("#walkathon_pledge_student_name").autocomplete({
             source: "<%= student_search_path %>",
             minLength: 2
         });

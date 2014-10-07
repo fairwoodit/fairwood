@@ -25,10 +25,10 @@ class Walkathon::PledgesController < ApplicationController
   # POST /walkathon/pledges
   # POST /walkathon/pledges.json
   def create
-    student                       = Student.find_by(full_name: params[:student_name])
     @walkathon_pledge             = Walkathon::Pledge.new(
       params[:walkathon_pledge][:pledge_type] == 'fixed' ? fixed_params : per_lap_params
     )
+    student                       = Student.find_by(full_name: @walkathon_pledge.student_name)
     @walkathon_pledge.student     = student
 
     respond_to do |format|
@@ -78,10 +78,10 @@ class Walkathon::PledgesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def fixed_params
-    params.require(:walkathon_pledge).permit(:sponsor_name, :sponsor_phone, :pledge_type, :fixed_pledge)
+    params.require(:walkathon_pledge).permit(:student_name, :sponsor_name, :sponsor_phone, :pledge_type, :fixed_pledge)
   end
 
   def per_lap_params
-    params.require(:walkathon_pledge).permit(:sponsor_name, :sponsor_phone, :pledge_type, :pledge_per_lap, :maximum_pledge)
+    params.require(:walkathon_pledge).permit(:student_name, :sponsor_name, :sponsor_phone, :pledge_type, :pledge_per_lap, :maximum_pledge)
   end
 end
