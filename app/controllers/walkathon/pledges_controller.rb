@@ -27,7 +27,7 @@ class Walkathon::PledgesController < ApplicationController
     @walkathon_pledge             = Walkathon::Pledge.new(
       params[:walkathon_pledge][:pledge_type] == 'fixed' ? fixed_params : per_lap_params
     )
-    student                       = Student.find_by(full_name: @walkathon_pledge.student_name)
+    student                       = Student.where("full_name ilike ?", @walkathon_pledge.student_name).first rescue nil
     @walkathon_pledge.student     = student
 
     respond_to do |format|
