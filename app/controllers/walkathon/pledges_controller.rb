@@ -4,8 +4,7 @@ class Walkathon::PledgesController < ApplicationController
   # GET /walkathon/pledges
   # GET /walkathon/pledges.json
   def index
-    # TODO: Enable if/when we figure out authentication
-#    @walkathon_pledges = Walkathon::Pledge.all
+    @walkathon_pledges = Walkathon::Pledge.all
   end
 
   # GET /walkathon/pledges/1

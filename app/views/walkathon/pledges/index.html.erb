@@ -1,33 +1,36 @@
-<h1>Listing walkathon_pledges</h1>
+<div style="background-color: whitesmoke; width: 1280px; margin: auto">
 
-<table>
-  <thead>
+  <h1>Walkathon Pledges</h1>
+
+  <table class="table table-condensed table-bordered">
+    <thead>
     <tr>
+      <th>Student name</th>
       <th>Sponsor name</th>
       <th>Sponsor phone</th>
+      <th>Sponsor email</th>
       <th>Pledge per lap</th>
       <th>Maximum pledge</th>
       <th>Fixed pledge</th>
-      <th colspan="3"></th>
     </tr>
-  </thead>
+    </thead>
 
-  <tbody>
+    <tbody>
     <% @walkathon_pledges.each do |walkathon_pledge| %>
-      <tr>
-        <td><%= walkathon_pledge.sponsor_name %></td>
-        <td><%= walkathon_pledge.sponsor_phone %></td>
-        <td><%= walkathon_pledge.pledge_per_lap %></td>
-        <td><%= walkathon_pledge.maximum_pledge %></td>
-        <td><%= walkathon_pledge.fixed_pledge %></td>
-        <td><%= link_to 'Show', walkathon_pledge %></td>
-        <td><%= link_to 'Edit', edit_walkathon_pledge_path(walkathon_pledge) %></td>
-        <td><%= link_to 'Destroy', walkathon_pledge, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+        <tr>
+          <td><%= walkathon_pledge.student.full_name %></td>
+          <td><%= walkathon_pledge.sponsor_name %></td>
+          <td><%= walkathon_pledge.sponsor_phone %></td>
+          <td><%= walkathon_pledge.sponsor_email %></td>
+          <td><%= walkathon_pledge.pledge_per_lap %></td>
+          <td><%= walkathon_pledge.maximum_pledge %></td>
+          <td><%= walkathon_pledge.fixed_pledge %></td>
+        </tr>
     <% end %>
-  </tbody>
-</table>
+    </tbody>
+  </table>
 
-<br>
+  <br>
 
-<%= link_to 'New Pledge', new_walkathon_pledge_path %>
+  <%= link_to 'New Pledge', new_walkathon_pledge_path %>
+</div>
