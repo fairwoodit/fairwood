@@ -6,6 +6,8 @@ class Student < ActiveRecord::Base
   belongs_to :teacher
   before_validation :update_full_name
 
+  has_many :walkathon_pledges, -> {order "walkathon_pledges.id" }, :class_name => 'Walkathon::Pledge'
+
   def update_full_name
     self.full_name = "#{self.first_name} #{self.last_name}"
   end
