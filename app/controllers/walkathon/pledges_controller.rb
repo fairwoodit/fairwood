@@ -32,6 +32,7 @@ class Walkathon::PledgesController < ApplicationController
 
     respond_to do |format|
       if @walkathon_pledge.save
+        UserMailer.new_pledge_email(student).deliver
         format.html { redirect_to :thankyou, notice: 'Pledge was successfully created.' }
         format.json { render :show, status: :created, location: @walkathon_pledge }
       else
