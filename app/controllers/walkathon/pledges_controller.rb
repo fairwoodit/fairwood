@@ -24,11 +24,11 @@ class Walkathon::PledgesController < ApplicationController
   # POST /walkathon/pledges
   # POST /walkathon/pledges.json
   def create
-    @walkathon_pledge             = Walkathon::Pledge.new(
+    @walkathon_pledge = Walkathon::Pledge.new(
       params[:walkathon_pledge][:pledge_type] == 'fixed' ? fixed_params : per_lap_params
     )
-    student                       = Student.where("full_name ilike ?", @walkathon_pledge.student_name).first rescue nil
-    @walkathon_pledge.student     = student
+    student = Student.where("full_name ilike ?", @walkathon_pledge.student_name).first rescue nil
+    @walkathon_pledge.student = student
 
     respond_to do |format|
       if @walkathon_pledge.save
@@ -44,6 +44,50 @@ class Walkathon::PledgesController < ApplicationController
 
   def thankyou
     # Show thank you page.
+  end
+
+  def record_laps
+    # Record lap info for upto 10 students
+    update_count = 0
+    errors       = []
+    Walkathon::Pledge.transaction do
+      params[:row].keys.sort.each do |row_num|
+        student_name = params[:row][row_num][:student_name]
+        if student_name.present?
+          student = Student.where("full_name ilike ?", student_name).first rescue nil
+          unless student
+            errors << "student #{student_name} not found"
+            next
+          end
+
+          # We found the student. Load up all of his/her pledges and update them.
+          Walkathon::Pledge.where(student: student).each do |pledge|
+            pledge.lap_count = params[:row][row_num][:lap_count]
+            if pledge.save
+              update_count += 1
+            else
+              # Store the validation error on this row's lap count
+              errors << "student #{student_name} lap-count is invalid: #{pledge.errors[:lap_count]}"
+            end
+          end
+        end
+      end
+      raise ActiveRecord::Rollback, "Failed validation" if errors.length > 0
+    end
+
+    if errors.length == 0
+      redirect_to show_record_laps_url, notice: "Updated #{update_count} pledges"
+    else
+      flash[:errors]    = errors
+      flash[:prev_rows] = params[:row]
+      redirect_to show_record_laps_url
+    end
+  end
+
+  def show_record_laps
+    # Show the record-laps form
+    @prev_rows = flash[:prev_rows]
+    @errors    = flash[:errors]
   end
 
   # PATCH/PUT /walkathon/pledges/1

@@ -1,21 +1,24 @@
 class Walkathon::Pledge < ActiveRecord::Base
   validates_presence_of :sponsor_name, :pledge_type
   validates :sponsor_phone, format: { with: /\d{3}-\d{3}-\d{4}/, message: "should be in xxx-xxx-xxxx form" }, allow_blank: true
-  validates :sponsor_email, format: { with: //, message: "should be user@domain format"}, allow_blank: true
-  validates_numericality_of :pledge_per_lap, :maximum_pledge, greater_than: 0, if: :isPerLap?
-  validates_numericality_of :fixed_pledge, greater_than: 0, if: :isFixed?
+  validates :sponsor_email, format: { with: //, message: "should be user@domain format" }, allow_blank: true
+  validates_numericality_of :pledge_per_lap, :maximum_pledge, greater_than: 0, if: :per_lap?
+  validates_numericality_of :fixed_pledge, greater_than: 0, if: :fixed?
   validate :has_student
   validate :has_contact_info
+  validates_numericality_of :lap_count, :committed_amount, :paid_amount, greater_than: 0, allow_nil: true
 
   belongs_to :student
 
   attr_accessor :student_name
 
-  def isPerLap?
+  before_save :update_committed_amount
+
+  def per_lap?
     self.pledge_type == "perLap"
   end
 
-  def isFixed?
+  def fixed?
     self.pledge_type == "fixed"
   end
 
@@ -27,6 +30,15 @@ class Walkathon::Pledge < ActiveRecord::Base
     unless sponsor_email.present? || sponsor_phone.present?
       errors.add(:sponsor_phone, "Sponsor email address or phone number is required")
       errors.add(:sponsor_email, "Sponsor email address or phone number is required")
+    end
+  end
+
+  def update_committed_amount
+    if fixed?
+      self.committed_amount = self.fixed_pledge
+    else
+      lap_count = self.lap_count || 0
+      self.committed_amount = [self.pledge_per_lap * lap_count, self.maximum_pledge].min
     end
   end
 end

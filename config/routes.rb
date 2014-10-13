@@ -1,17 +1,20 @@
 Rails.application.routes.draw do
-  resources :parents
+  # TODO: Fix up routes once we have authentication/authorization
 
-  resources :families
-
-  resources :teachers
+  # resources :parents
+  #
+  # resources :families
+  #
+  # resources :teachers
+  # resources :students, only: [:index, :show]
 
   namespace :walkathon do
-    resources :pledges
+    resources :pledges, only: [:new, :create, :index]
   end
 
-  resources :students
 
-  post 'students/import' => 'students#import', as: :import
+  # Disable import until we have proper authentication
+  #  post 'students/import' => 'students#import', as: :import
   get 'student_search' => 'students#search', as: :student_search
 
   # The priority is based upon order of creation: first created -> highest priority.
@@ -20,6 +23,8 @@ Rails.application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'walkathon/pledges#new'
   get 'walkathon/thankyou' => 'walkathon/pledges#thankyou', as: :thankyou
+  post 'walkathon/record_laps' => 'walkathon/pledges#record_laps', as: :record_laps
+  get 'walkathon/record_laps' => 'walkathon/pledges#show_record_laps', as: :show_record_laps
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

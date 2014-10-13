@@ -12,6 +12,9 @@
       <th>Pledge per lap</th>
       <th>Maximum pledge</th>
       <th>Fixed pledge</th>
+      <th>Lap count</th>
+      <th>Committed amount ($)</th>
+      <th>Paid amount ($)</th>
     </tr>
     </thead>
 
@@ -25,6 +28,9 @@
           <td><%= walkathon_pledge.pledge_per_lap %></td>
           <td><%= walkathon_pledge.maximum_pledge %></td>
           <td><%= walkathon_pledge.fixed_pledge %></td>
+          <td><%= walkathon_pledge.lap_count %></td>
+          <td><%= walkathon_pledge.committed_amount %></td>
+          <td><%= walkathon_pledge.paid_amount %></td>
         </tr>
     <% end %>
     </tbody>
