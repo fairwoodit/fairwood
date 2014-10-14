@@ -1,0 +1,33 @@
+<div style="background-color: whitesmoke; width: 1280px; margin: auto">
+
+  <h1>Walkathon Pledge Summary</h1>
+
+  <table class="table table-condensed table-bordered">
+    <thead>
+    <tr>
+      <th>Student name</th>
+      <th>Grade</th>
+      <th>Teacher</th>
+      <th>Lap count</th>
+      <th>Total Committed amount ($)</th>
+      <th>Total Paid amount ($)</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <% @pledge_summaries.each do |summary| %>
+        <tr>
+          <td><%= summary.full_name %></td>
+          <td><%= summary.grade %></td>
+          <td><%= summary.teacher_name %></td>
+          <td><%= summary.lap_count %></td>
+          <td><%= "$%.2f" % summary.total_committed_amount if summary.total_committed_amount.present? %></td>
+          <td><%= "$%.2f" % summary.total_paid_amount if summary.total_paid_amount.present? %></td>
+        </tr>
+    <% end %>
+    </tbody>
+  </table>
+  <p>
+    <%= link_to 'Download CSV', pledge_summary_path(format: :csv) %>
+  </p>
+</div>

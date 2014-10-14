@@ -6,7 +6,8 @@ class Walkathon::Pledge < ActiveRecord::Base
   validates_numericality_of :fixed_pledge, greater_than: 0, if: :fixed?
   validate :has_student
   validate :has_contact_info
-  validates_numericality_of :lap_count, :committed_amount, :paid_amount, greater_than: 0, allow_nil: true
+  validates_numericality_of :lap_count, greater_than: 0, allow_nil: true
+  validates_numericality_of :paid_amount, greater_than_or_equal_to: 0, allow_nil: true
 
   belongs_to :student
 

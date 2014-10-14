@@ -90,6 +90,24 @@ class Walkathon::PledgesController < ApplicationController
     @errors    = flash[:errors]
   end
 
+  def summary
+    @pledge_summaries = Walkathon::Pledge.joins(student: :teacher).select(
+      'students.full_name, students.grade, ' +
+        'concat(teachers.title, \' \', teachers.last_name) as teacher_name, ' +
+        'min(walkathon_pledges.lap_count) as lap_count, ' +
+        'sum(walkathon_pledges.committed_amount) as total_committed_amount, ' +
+        'sum(walkathon_pledges.paid_amount) as total_paid_amount').group(
+      'students.full_name, students.grade, teacher_name')
+
+    respond_to do |format|
+      format.html
+      format.csv do
+        headers['Content-Disposition'] = "attachment; filename=\"pledge-summaries.csv\""
+        headers['Content-Type']        ||= 'text/csv'
+      end
+    end
+  end
+
   # PATCH/PUT /walkathon/pledges/1
   # PATCH/PUT /walkathon/pledges/1.json
   def update

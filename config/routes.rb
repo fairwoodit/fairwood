@@ -25,6 +25,7 @@ Rails.application.routes.draw do
   get 'walkathon/thankyou' => 'walkathon/pledges#thankyou', as: :thankyou
   post 'walkathon/record_laps' => 'walkathon/pledges#record_laps', as: :record_laps
   get 'walkathon/record_laps' => 'walkathon/pledges#show_record_laps', as: :show_record_laps
+  get 'walkathon/pledge_summary' => 'walkathon/pledges#summary', as: :pledge_summary
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
