@@ -30,6 +30,9 @@ class Walkathon::PledgesController < ApplicationController
     student = Student.where("full_name ilike ?", @walkathon_pledge.student_name).first rescue nil
     @walkathon_pledge.student = student
 
+    lap_record                  = Walkathon::LapCount.find_by_student_id(student.id)
+    @walkathon_pledge.lap_count = lap_record.lap_count if lap_record
+
     respond_to do |format|
       if @walkathon_pledge.save
         UserMailer.new_pledge_email(student).deliver
@@ -70,6 +73,11 @@ class Walkathon::PledgesController < ApplicationController
               errors << "student #{student_name} lap-count is invalid: #{pledge.errors[:lap_count]}"
             end
           end
+
+          # Also add/update his lap record
+          lap_record           = Walkathon::LapCount.find_by_student_id(student.id) || Walkathon::LapCount.new(student: student)
+          lap_record.lap_count = params[:row][row_num][:lap_count]
+          lap_record.save
         end
       end
       raise ActiveRecord::Rollback, "Failed validation" if errors.length > 0
