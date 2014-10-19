@@ -24,10 +24,16 @@ class Walkathon::PledgesController < ApplicationController
   # POST /walkathon/pledges
   # POST /walkathon/pledges.json
   def create
-    @walkathon_pledge = Walkathon::Pledge.new(
+    student = Student.where("full_name ilike ?", params[:walkathon_pledge][:student_name]).first rescue nil
+    @walkathon_pledge =
+      Walkathon::Pledge.where(student: student, sponsor_name: params[:walkathon_pledge][:sponsor_name]).first rescue nil if student
+
+    # There was an old pledge. Delete it.
+    @walkathon_pledge.delete if @walkathon_pledge
+
+    @walkathon_pledge         = Walkathon::Pledge.new(
       params[:walkathon_pledge][:pledge_type] == 'fixed' ? fixed_params : per_lap_params
     )
-    student = Student.where("full_name ilike ?", @walkathon_pledge.student_name).first rescue nil
     @walkathon_pledge.student = student
 
     lap_record                  = Walkathon::LapCount.find_by_student_id(student.id)
