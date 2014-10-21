@@ -5,6 +5,14 @@ class Walkathon::PledgesController < ApplicationController
   # GET /walkathon/pledges.json
   def index
     @walkathon_pledges = Walkathon::Pledge.all
+
+    respond_to do |format|
+      format.html
+      format.csv do
+        headers['Content-Disposition'] = "attachment; filename=\"pledges.csv\""
+        headers['Content-Type']        ||= 'text/csv'
+      end
+    end
   end
 
   # GET /walkathon/pledges/1

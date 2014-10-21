@@ -37,6 +37,9 @@
   </table>
 
   <br>
+  <p>
+    <%= link_to 'Download CSV', walkathon_pledges_path(format: :csv) %>
+  </p>
 
   <%= link_to 'New Pledge', new_walkathon_pledge_path %>
 </div>

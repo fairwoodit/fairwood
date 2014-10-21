@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   # resources :families
   #
   # resources :teachers
-  # resources :students, only: [:index, :show]
+  # resources :students
 
   namespace :walkathon do
     resources :pledges, only: [:new, :create, :index]
