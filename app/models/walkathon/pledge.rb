@@ -25,7 +25,7 @@ class Walkathon::Pledge < ActiveRecord::Base
 
   def has_student
     errors.add(:student_name,
-               'does not exist. Please contact fairwood-techsupport@google-groups.com with student information.'
+               'does not exist. Please contact fairwood-techsupport@googlegroups.com with student information.'
     ) unless student.present?
   end
 
