@@ -4,7 +4,7 @@ class Walkathon::PledgesController < ApplicationController
   # GET /walkathon/pledges
   # GET /walkathon/pledges.json
   def index
-    @walkathon_pledges = Walkathon::Pledge.all
+    @walkathon_pledges = Walkathon::Pledge.includes(:student)
 
     respond_to do |format|
       format.html
@@ -44,7 +44,7 @@ class Walkathon::PledgesController < ApplicationController
     )
     @walkathon_pledge.student = student
 
-    lap_record                  = Walkathon::LapCount.find_by_student_id(student.id)
+    lap_record                  = Walkathon::LapCount.find_by_student_id(student.id) if student
     @walkathon_pledge.lap_count = lap_record.lap_count if lap_record
 
     respond_to do |format|

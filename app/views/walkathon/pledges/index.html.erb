@@ -6,6 +6,8 @@
     <thead>
     <tr>
       <th>Student name</th>
+      <th>Grade</th>
+      <th>Teacher</th>
       <th>Sponsor name</th>
       <th>Sponsor phone</th>
       <th>Sponsor email</th>
@@ -22,6 +24,8 @@
     <% @walkathon_pledges.each do |walkathon_pledge| %>
         <tr>
           <td><%= walkathon_pledge.student.full_name %></td>
+          <td><%= walkathon_pledge.student.grade %></td>
+          <td><%= walkathon_pledge.student.teacher.full_name %></td>
           <td><%= walkathon_pledge.sponsor_name %></td>
           <td><%= walkathon_pledge.sponsor_phone %></td>
           <td><%= walkathon_pledge.sponsor_email %></td>

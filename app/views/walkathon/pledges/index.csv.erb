@@ -1,9 +1,11 @@
-<%- headers = ['Student Name', 'Sponsor Name', 'Sponsor Phone', 'Sponsor email', 'Pledge per lap', 'Maximum Pledge',
+<%- headers = ['Student Name', 'Grade', 'Teacher', 'Sponsor Name', 'Sponsor Phone', 'Sponsor email', 'Pledge per lap', 'Maximum Pledge',
                'Fixed Pledge', 'Lap Count', 'Committed Amount ($)', 'Paid Amount ($)'] -%>
 <%= CSV.generate_line headers, row_sep: ?\t, :quote_char => ?\ %>
 <%- @walkathon_pledges.each do |pledge| -%>
     <%= CSV.generate_line([
                                   pledge.student.full_name,
+                                  pledge.student.grade,
+                                  pledge.student.teacher.full_name,
                                   pledge.sponsor_name,
                                   pledge.sponsor_phone,
                                   pledge.sponsor_email,
