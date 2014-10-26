@@ -1,4 +1,4 @@
-<div style="background-color: whitesmoke; width: 1280px; margin: auto">
+<div class="mycontainer" style="background-color: whitesmoke">
 
   <h1>Walkathon Pledge Summary</h1>
 
@@ -21,8 +21,8 @@
           <td><%= summary.grade %></td>
           <td><%= summary.teacher_name %></td>
           <td><%= summary.lap_count %></td>
-          <td><%= "$%.2f" % summary.total_committed_amount if summary.total_committed_amount.present? %></td>
-          <td><%= "$%.2f" % summary.total_paid_amount if summary.total_paid_amount.present? %></td>
+          <td><%= money(summary.total_committed_amount) %></td>
+          <td><%= money(summary.total_paid_amount) %></td>
         </tr>
     <% end %>
     </tbody>

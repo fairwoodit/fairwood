@@ -1,22 +1,23 @@
-<div style="background-color: whitesmoke; width: 1280px; margin: auto">
+<div class="mycontainer" style="width: 1280px">
 
   <h1>Walkathon Pledges</h1>
 
   <table class="table table-condensed table-bordered">
     <thead>
     <tr>
-      <th>Student name</th>
+      <th class="col-sm-3">Student name</th>
       <th>Grade</th>
-      <th>Teacher</th>
-      <th>Sponsor name</th>
-      <th>Sponsor phone</th>
-      <th>Sponsor email</th>
+      <th class="col-sm-3">Teacher</th>
+      <th class="col-sm-3">Sponsor name</th>
+      <th class="col-sm-3">Sponsor phone</th>
+      <th class="col-sm-3">Sponsor email</th>
       <th>Pledge per lap</th>
       <th>Maximum pledge</th>
       <th>Fixed pledge</th>
       <th>Lap count</th>
-      <th>Committed amount ($)</th>
-      <th>Paid amount ($)</th>
+      <th>Committed amount</th>
+      <th>Paid amount</th>
+      <th></th>
     </tr>
     </thead>
 
@@ -29,21 +30,19 @@
           <td><%= walkathon_pledge.sponsor_name %></td>
           <td><%= walkathon_pledge.sponsor_phone %></td>
           <td><%= walkathon_pledge.sponsor_email %></td>
-          <td><%= walkathon_pledge.pledge_per_lap %></td>
-          <td><%= walkathon_pledge.maximum_pledge %></td>
-          <td><%= walkathon_pledge.fixed_pledge %></td>
+          <td><%= money(walkathon_pledge.pledge_per_lap) %></td>
+          <td><%= money(walkathon_pledge.maximum_pledge) %></td>
+          <td><%= money(walkathon_pledge.fixed_pledge) %></td>
           <td><%= walkathon_pledge.lap_count %></td>
-          <td><%= walkathon_pledge.committed_amount %></td>
-          <td><%= walkathon_pledge.paid_amount %></td>
+          <td><%= money(walkathon_pledge.committed_amount) %></td>
+          <td><%= money(walkathon_pledge.paid_amount) %></td>
+          <td><%= link_to 'View/Add Payments', walkathon_pledge_payments_path(pledge_id: walkathon_pledge.id) %></td>
         </tr>
     <% end %>
     </tbody>
   </table>
 
+  <%= link_to 'Download CSV', walkathon_pledges_path(format: :csv) %>
   <br>
-  <p>
-    <%= link_to 'Download CSV', walkathon_pledges_path(format: :csv) %>
-  </p>
-
   <%= link_to 'New Pledge', new_walkathon_pledge_path %>
 </div>

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
   # TODO: Fix up routes once we have authentication/authorization
 
   # resources :parents
@@ -6,15 +7,17 @@ Rails.application.routes.draw do
   # resources :families
   #
   # resources :teachers
-  # resources :students
+  resources :students if Rails.env == 'development'
 
   namespace :walkathon do
-    resources :pledges, only: [:new, :create, :index]
+    resources :pledges, only: [:new, :create, :index] do
+      resources :payments, only: [:new, :create, :index]
+    end
   end
 
 
   # Disable import until we have proper authentication
-  #  post 'students/import' => 'students#import', as: :import
+  post 'students/import' => 'students#import', as: :import if Rails.env == 'development'
   get 'student_search' => 'students#search', as: :student_search
 
   # The priority is based upon order of creation: first created -> highest priority.
@@ -22,6 +25,7 @@ Rails.application.routes.draw do
 
   # You can have the root of your site routed with "root"
   root 'walkathon/pledges#new'
+  get 'walkathon/payments' => 'walkathon/payments#index'
   get 'walkathon/thankyou' => 'walkathon/pledges#thankyou', as: :thankyou
   post 'walkathon/record_laps' => 'walkathon/pledges#record_laps', as: :record_laps
   get 'walkathon/record_laps' => 'walkathon/pledges#show_record_laps', as: :show_record_laps

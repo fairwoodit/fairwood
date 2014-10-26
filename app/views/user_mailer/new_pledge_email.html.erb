@@ -23,9 +23,9 @@
         <td style="border-left: solid 1px; border-bottom: solid 1px"><%= walkathon_pledge.sponsor_name %></td>
         <td align="center" style="border-bottom: solid 1px"><%= walkathon_pledge.sponsor_phone %></td>
         <td align="center" style="border-bottom: solid 1px"><%= walkathon_pledge.sponsor_email %></td>
-        <td align="center" style="border-bottom: solid 1px"><%= "$%.2f" % walkathon_pledge.pledge_per_lap if walkathon_pledge.pledge_per_lap %></td>
-        <td align="center" style="border-bottom: solid 1px"><%= "$%.2f" % walkathon_pledge.maximum_pledge if walkathon_pledge.maximum_pledge %></td>
-        <td align="center" style="border-right: solid 1px; border-bottom: solid 1px"><%= "$%.2f" % walkathon_pledge.fixed_pledge if walkathon_pledge.fixed_pledge %></td>
+        <td align="center" style="border-bottom: solid 1px"><%= money(walkathon_pledge.pledge_per_lap) %></td>
+        <td align="center" style="border-bottom: solid 1px"><%= money(walkathon_pledge.maximum_pledge) %></td>
+        <td align="center" style="border-right: solid 1px; border-bottom: solid 1px"><%= money(walkathon_pledge.fixed_pledge) %></td>
       </tr>
   <% end %>
   </tbody>

@@ -1,0 +1,2 @@
+module Walkathon::PaymentsHelper
+end
