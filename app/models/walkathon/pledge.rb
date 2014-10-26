@@ -10,6 +10,7 @@ class Walkathon::Pledge < ActiveRecord::Base
   validates_numericality_of :paid_amount, greater_than_or_equal_to: 0, allow_nil: true
 
   belongs_to :student
+  has_many :walkathon_payments, :class_name => 'Walkathon::Payment'
 
   attr_accessor :student_name
 

@@ -15,10 +15,17 @@
  *= require rails_bootstrap_forms
  *= require_self
  */
-
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
 body {
   background-color: teal;
+}
+
+div.mycontainer {
+  width: 800px;
+  background-color: whitesmoke;
+  margin: 20px auto auto auto;
+  padding: 1px 10px 10px 10px;
+  border-radius: 10px;
 }

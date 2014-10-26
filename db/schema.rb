@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141019142753) do
+ActiveRecord::Schema.define(version: 20141023154903) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -67,6 +67,16 @@ ActiveRecord::Schema.define(version: 20141019142753) do
   end
 
   add_index "walkathon_lap_counts", ["student_id"], name: "index_walkathon_lap_counts_on_student_id", unique: true, using: :btree
+
+  create_table "walkathon_payments", force: true do |t|
+    t.string   "description"
+    t.decimal  "amount",              precision: 7, scale: 2
+    t.integer  "walkathon_pledge_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "walkathon_payments", ["walkathon_pledge_id"], name: "index_walkathon_payments_on_walkathon_pledge_id", using: :btree
 
   create_table "walkathon_pledges", force: true do |t|
     t.string   "sponsor_name"

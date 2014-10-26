@@ -1,4 +1,5 @@
 class UserMailer < ActionMailer::Base
+  add_template_helper(ApplicationHelper)
   default from: "fairwoodit@gmail.com"
 
   # @param [Student] student
