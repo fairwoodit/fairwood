@@ -45,4 +45,8 @@ class Walkathon::Pledge < ActiveRecord::Base
       self.committed_amount = [self.pledge_per_lap * lap_count, self.maximum_pledge].min
     end
   end
+
+  def paid_in_full
+    self.paid_amount && self.paid_amount >= self.committed_amount
+  end
 end
