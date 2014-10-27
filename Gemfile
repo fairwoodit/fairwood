@@ -45,6 +45,9 @@ gem 'bootstrap-sass'
 gem 'autoprefixer-rails'
 gem 'bootstrap_form'
 
+# NewRelic
+gem 'newrelic_rpm'
+
 # For Heroku static asset handling
 group :development do
   gem 'rspec-rails'
