@@ -13,7 +13,7 @@ Rails.application.routes.draw do
 
 
   # Disable import until we have proper authentication
-  post 'students/import' => 'students#import', as: :import if Rails.env == 'development'
+  post 'students/import' => 'students#import', as: :import
   get 'student_search' => 'students#search', as: :student_search
 
   # The priority is based upon order of creation: first created -> highest priority.
