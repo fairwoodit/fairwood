@@ -6,7 +6,7 @@ class UserMailer < ActionMailer::Base
   def new_pledge_email(student)
     @student = student
     @pledges = student.walkathon_pledges
-    parent_emails = student.family.parents.map(&:email)
+    parent_emails = student.emails.split(',').map(&:strip)
     mail(to: parent_emails, subject: "#{student.first_name} has a new pledge!")
   end
 end

@@ -21,7 +21,8 @@
 </p>
 
 <p>
-  <%= link_to "Family Details", @student.family %>
+  <strong>Email addresses:</strong>
+  <%= @student.emails %>
 </p>
 
 <%= link_to 'Edit', edit_student_path(@student) %> |

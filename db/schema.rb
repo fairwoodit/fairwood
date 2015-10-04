@@ -11,27 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141023154903) do
+ActiveRecord::Schema.define(version: 20151004210446) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "families", force: true do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "parents", force: true do |t|
-    t.string   "first_name"
-    t.string   "last_name"
-    t.string   "email"
-    t.integer  "family_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "parents", ["family_id"], name: "index_parents_on_family_id", using: :btree
-  add_index "parents", ["last_name", "first_name"], name: "index_parents_on_last_name_and_first_name", using: :btree
 
   create_table "students", force: true do |t|
     t.string   "first_name"
@@ -42,6 +25,7 @@ ActiveRecord::Schema.define(version: 20141023154903) do
     t.integer  "teacher_id"
     t.integer  "family_id"
     t.integer  "grade"
+    t.string   "emails"
   end
 
   add_index "students", ["family_id"], name: "index_students_on_family_id", using: :btree

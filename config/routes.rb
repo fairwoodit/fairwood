@@ -2,12 +2,8 @@ Rails.application.routes.draw do
 
   # TODO: Fix up routes once we have authentication/authorization
 
-  # resources :parents
-  #
-  # resources :families
-  #
-  # resources :teachers
-  resources :students if Rails.env == 'development'
+  resources :teachers
+  resources :students
 
   namespace :walkathon do
     resources :pledges, only: [:new, :create, :index] do

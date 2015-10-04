@@ -68,7 +68,6 @@ class StudentsController < ApplicationController
     # Parse the student data
     student_data = params[:student_data] ? params[:student_data].read : ''
 
-    # TODO: Don't assume first row is a header row. Detect it and skip if it's there.
     row_count    = 0
     Student.transaction do
       student_data.split(/[\r\n]/).each do |row|
@@ -78,75 +77,30 @@ class StudentsController < ApplicationController
         # Skip the header row (e.g. first row) in the data
         next if row_count == 1
 
-        student_last, student_first, grade,
-          teacher_last, teacher_first, teacher_title,
-          father_last, father_first, father_email,
-          mother_first, mother_last,
-          mother_email = row.split(',')[1..12]
+        student_last, student_first, grade, mother_email, father_email,
+          teacher_title, teacher_last, teacher_first = row.split(',')[0..7]
 
         # Find or create the Student
         student        = load_student(student_first, student_last)
         student.grade  = grade if grade.present?
 
+        # Aggregate the e-mail addresses.
+        student.add_email(mother_email)
+        student.add_email(father_email)
+
         # Find or create the teacher
         teacher        = load_teacher(teacher_first, teacher_last)
         teacher.title  = teacher_title if teacher_title.present?
 
-        # Find or create the parents
-        parents        = []
-
-        if mother_last.present?
-          mother       = load_parent(mother_first, mother_last)
-          mother.email = mother_email if mother_email.present?
-          parents << mother
-        end
-
-        if father_last.present?
-          father       = load_parent(father_first, father_last)
-          father.email = father_email if father_email.present?
-          parents << father
-        end
-
-        # Create the Family object if it doesn't exist. Drive it from the parent side.
-        # NB: We work under the assumption that a given parent only belongs to one family. If one parent had two
-        # children from two different partners, we may get in trouble here.
-
-        if parents.empty?
-          # A student *must* have at least one parent!
-          redirect_to students_url, notice: "#{student_first} #{student_last} has no parents! Aborting import; no records changed!"
-          return
-        end
-
-        # @type [Parent]
-        first_parent = parents.first
-
-        # @type [Family]
-        family       = first_parent.family || first_parent.build_family
-
         # Wire things up!
-        parents.each do |parent|
-          # noinspection RubyResolve
-          parent.family = family
-        end
         student.teacher = teacher
-        student.family  = family
-        family.parents  = parents
 
         # Save one and all! We're probably being overly conservative here...
         student.save!
         teacher.save!
-        family.save!
-        parents.each do |parent|
-          parent.save!
-        end
       end
     end
     redirect_to students_url, notice: "#{row_count - 1} student records created."
-  end
-
-  # @return [Parent]
-  def load_parent(mother_first, mother_last)
-    find_or_instantiate(Parent, mother_last, mother_first)
   end
 
   # @return [Student]
@@ -181,6 +135,6 @@ class StudentsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def student_params
-    params.require(:student).permit(:first_name, :last_name, :grade)
+    params.require(:student).permit(:first_name, :last_name, :grade, :emails)
   end
 end
