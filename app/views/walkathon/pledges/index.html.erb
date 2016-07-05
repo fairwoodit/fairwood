@@ -35,7 +35,11 @@
           <td><%= money(walkathon_pledge.fixed_pledge) %></td>
           <td><%= walkathon_pledge.lap_count %></td>
           <td><%= money(walkathon_pledge.committed_amount) %></td>
-          <td><%= money(walkathon_pledge.paid_amount) %></td>
+          <% if walkathon_pledge.paid_amount && walkathon_pledge.paid_amount != 0 %>
+            <td><%= money(walkathon_pledge.paid_amount) %></td>
+          <% else %>
+            <td class="warn">$0.00</td>
+          <% end %>
           <td><%= link_to 'View/Add Payments', walkathon_pledge_payments_path(pledge_id: walkathon_pledge.id) %></td>
         </tr>
     <% end %>
