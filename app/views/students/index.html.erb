@@ -19,7 +19,7 @@
         <td><%= student.first_name %></td>
         <td><%= student.last_name %></td>
         <td><%= student.grade %></td>
-        <td><%= student.emails.gsub(',', '<br>').html_safe %></td>
+        <td><%= student.emails ? student.emails.gsub(',', '<br>').html_safe : nil %></td>
         <td><%= link_to 'Show', student %></td>
         <td><%= link_to 'Edit', edit_student_path(student) %></td>
         <td><%= link_to 'Destroy', student, method: :delete, data: { confirm: 'Are you sure?' } %></td>
