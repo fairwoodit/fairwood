@@ -114,12 +114,12 @@ class Walkathon::PledgesController < ApplicationController
 
   def summary
     @pledge_summaries = Walkathon::Pledge.joins(student: :teacher).select(
-      'students.full_name, students.emails, students.grade, ' +
-        'concat(teachers.title, \' \', teachers.last_name) AS teacher_name, ' +
-        'min(walkathon_pledges.lap_count) AS lap_count, ' +
-        'sum(walkathon_pledges.committed_amount) AS total_committed_amount, ' +
-        'sum(walkathon_pledges.paid_amount) AS total_paid_amount, ' +
-          'sum(walkathon_pledges.committed_amount) - sum(walkathon_pledges.paid_amount) AS remaining'
+        'students.full_name, students.emails, students.grade, ' +
+            'concat(teachers.title, \' \', teachers.last_name) AS teacher_name, ' +
+            'min(walkathon_pledges.lap_count) AS lap_count, ' +
+            'sum(walkathon_pledges.committed_amount) AS total_committed_amount, ' +
+            'coalesce(sum(walkathon_pledges.paid_amount), 0) AS total_paid_amount, ' +
+            'sum(walkathon_pledges.committed_amount) - coalesce(sum(walkathon_pledges.paid_amount), 0) AS remaining'
     ).group('students.full_name, students.emails, students.grade, teacher_name')
 
     respond_to do |format|
